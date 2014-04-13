@@ -29,6 +29,7 @@ SCHEDULER.every '60s' , :first_in => 0 do
     
     github = Github.new
     commit_message = github.repos.commits.all('bwelds', 'test-dashing').first.commit.message
+    commit_date = github.repos.commits.all('bwelds', 'test-dashing').first.commit.author.date
     
-    send_event('recent_git_commit', { text: "#{commit_message} (Last checked: #{the_time})" })
+    send_event('recent_git_commit', { text: "\"#{commit_message}\"", moreinfo: "(Committed at: #{commit_date})" })
 end
