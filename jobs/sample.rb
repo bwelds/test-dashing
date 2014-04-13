@@ -1,3 +1,5 @@
+require 'github_api'
+
 current_valuation = 0
 current_karma = 0
 
@@ -18,5 +20,15 @@ SCHEDULER.every '1s' do
   
   the_time = Time.now
 send_event('welcome', { title: "The amazing title", text: "The time is #{the_time}" })
-send_event('recent_git_commit', { text: "One step closer to a git commit message" })
+
+end
+
+SCHEDULER.every '60s' , :first_in => 0 do
+    the_time = Time.now
+
+    
+    github = Github.new
+    commit_message = github.repos.commits.all('bwelds', 'test-dashing').first.commit.message
+    
+    send_event('recent_git_commit', { text: "#{commit_message} (Last checked: #{the_time})" })
 end
