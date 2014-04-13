@@ -18,4 +18,5 @@ SCHEDULER.every '1s' do
   
   the_time = Time.now
 send_event('welcome', { title: "The amazing title", text: "The time is #{the_time}" })
+send_event('recent_git_commit', { text: "One step closer to a git commit message" })
 end
